@@ -30,10 +30,10 @@ class PIDController {
 // Example usage
 float kp = 0.6;  // Proportional gain
 float ki = 1;  // Integral gain
-float kd = 0.02;  // Derivative gain
+float kd = .02;  // Derivative gain
 float target_flow_rate = 90;  // Target flow rate in CFM
 float sample_time = 0.1;  // Sample time in seconds
-
+float deadzone = 0.01;
 // Create an instance of the PID controller
 PIDController pid_controller(kp, ki, kd, sample_time);
 
@@ -60,12 +60,18 @@ void loop() {
 
  
    
- 
-        current_flow_rate += control_signal;
-        
-        Serial.print("Current flow rate: ");
+ if(abs(target_flow_rate-current_flow_rate) >= deadzone ){
+
+
+         current_flow_rate += control_signal;
+         Serial.print("Current flow rate: ");
+
         Serial.println(current_flow_rate);
-        
+   }
+   else if(abs(target_flow_rate-current_flow_rate) <= deadzone ){
+
+         return 0;
+   }
          
    
 
