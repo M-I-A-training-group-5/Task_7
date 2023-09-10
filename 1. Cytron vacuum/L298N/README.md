@@ -1,10 +1,3 @@
-
-<style type="text/css">
-body {
-background-color: white;
-}
-</style>
-
 # L298N
 
 ![cytron](https://lastminuteengineers.b-cdn.net/wp-content/uploads/arduino/L298N-Motor-Driver-Module-Pinout.png)
