@@ -60,18 +60,14 @@ void loop() {
 
  
    
-  if(abs(target_flow_rate-current_flow_rate) > 1 ){
-
+ 
+        current_flow_rate += control_signal;
+        
         Serial.print("Current flow rate: ");
         Serial.println(current_flow_rate);
-         current_flow_rate += control_signal;
+        
          
-   }
-   else if(abs(target_flow_rate-current_flow_rate) < 1 ){
-         Serial.print("Current flow rate: ");
-         Serial.println("Exiting Program");
-         
-   }
+   
 
     // Apply the control signal to the suction mechanism
     // Adjust the suction mechanism based on the control signal
