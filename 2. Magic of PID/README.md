@@ -19,50 +19,6 @@ This library is needed for functions such as `abs` (absolute value).
 ---
 The next part of the code declares and initializes some global variables that are used throughout the program:
 
-    // Example usage
-    float kp = 0.7; // Proportional gain
-    float ki = 0.3; // Integral gain
-    float kd = 0.2; // Derivative gain
-    float target_flow_rate = 90; // Target flow rate in CFM
-    float sample_time = 0.1; // Sample time in seconds
-
-    class PIDController { // Define a class for the PID controller
-    public:
-        PIDController(float kp, float ki, float kd, float sample_time) { // Constructor that takes the PID parameters and the sample time as arguments
-        this->kp = kp; // Assign the proportional gain to the class member variable
-        this->ki = ki; // Assign the integral gain to the class member variable
-        this->kd = kd; // Assign the derivative gain to the class member variable
-        this->sample_time = sample_time; // Assign the sample time to the class member variable
-        previous_error = 0; // Initialize the previous error to zero
-        integral = 0; // Initialize the integral term to zero
-        }
-
-        float calculate(float setpoint, float process_variable) { // Method that calculates the control signal given the setpoint and the process variable
-        float error = setpoint - process_variable; // Calculate the error as the difference between the setpoint and the process variable
-        integral += (error * sample_time); // Update the integral term by adding the product of the error and the sample time
-        float derivative = (error - previous_error) / sample_time; // Calculate the derivative term as the quotient of the difference between the current and previous errors and the sample time
-        float output = kp * error + ki * integral + kd * derivative; // Calculate the output as the sum of the products of the PID parameters and their respective terms
-        previous_error = error; // Update the previous error with the current error
-        return output; // Return the output as the control signal
-        }
-
-    private:
-        float kp; // Proportional gain
-        float ki; // Integral gain
-        float kd; // Derivative gain
-        float sample_time; // Sample time
-        float previous_error; // Previous error
-        float integral; // Integral term
-    };
-
-    // Create an instance of the PID controller
-    PIDController pid_controller(kp, ki, kd, sample_time);
-
-    // Variables for flow meter and suction mechanism
-    float current_flow_rate = 0; // Initial flow rate
-    float control_signal = 0; // Control signal for the suction mechanism
-    unsigned long previous_time = 0; // Previous time in milliseconds
-
 The first four variables are constants that define the PID parameters (`kp`, `ki`, `kd`) and the target flow rate (`target_flow_rate`) in cubic feet per minute (CFM). These values can be changed according to your needs and preferences.
 
 The next variable (`sample_time`) defines how often the PID controller calculates and applies the control signal in seconds. This value should be chosen based on your hardware capabilities and desired performance.
@@ -109,33 +65,6 @@ This function initializes the hardware and libraries that are needed for the pro
 ---
 
 The last part of the code defines the loop function that runs repeatedly after the setup function:
-
-    void loop() {
-    unsigned long current_time = millis(); // Get the current time in milliseconds
-    float delta_time = (current_time - previous_time) / 1000.0; // Convert milliseconds to seconds and calculate the elapsed time since the last loop iteration
-
-    if (delta_time >= sample_time) { // Check if the elapsed time is greater than or equal to the sample time
-
-        // Measure the current flow rate using the flow meter 
-        // Update the current_flow_rate variable with the measured value
-
-        // Calculate the control signal using the PID controller 
-        control_signal = pid_controller.calculate(target_flow_rate, current_flow_rate); 
-
-        if (abs(target_flow_rate - current_flow_rate) < .01) return 0; 
-        if (target_flow_rate > current_flow_rate) current_flow_rate += control_signal;
-        else if(target_flow_rate < current_flow_rate) current_flow_rate -= target_flow_rate;
-
-        // Apply the control signal to the suction mechanism 
-        // Adjust the suction mechanism based on the control signal
-
-        // Print the control signal 
-        Serial.print("Ccurrent flow rate: "); 
-        Serial.println(current_flow_rate); 
-
-        previous_time = current_time; // Update the previous time with the current time 
-    }
-    }
 
 This function performs the main logic of the program. It first gets the current time in milliseconds by calling the `millis` function from the math library. It then calculates the elapsed time since the last loop iteration by subtracting the previous time from the current time and dividing by 1000. This converts milliseconds to seconds.
 
