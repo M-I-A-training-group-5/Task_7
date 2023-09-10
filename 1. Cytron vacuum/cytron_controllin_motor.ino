@@ -50,7 +50,7 @@ void controlMotor()
     digitalWrite(motorDirection, LOW);
     analogWrite(motorPWM, -currentSpeed); // Set motor speed
     Serial.print(-currentSpeed);          // Print the motor speed
-    Serial.print(" clockwise");
+    Serial.print(" Clockwise");
     Serial.println();
   }
   else if (currentSpeed > 0.0)
@@ -59,7 +59,7 @@ void controlMotor()
     digitalWrite(motorDirection, HIGH);
     analogWrite(motorPWM, currentSpeed); // Set motor speed
     Serial.print(currentSpeed);          // Print the motor speed
-    Serial.print(" anticlockwise");
+    Serial.print(" Anticlockwise");
     Serial.println();
   }
 }
