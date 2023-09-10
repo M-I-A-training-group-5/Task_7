@@ -29,8 +29,8 @@ class PIDController {
 
 // Example usage
 float kp = 0.6;  // Proportional gain
-float ki = 0;  // Integral gain
-float kd = 0;  // Derivative gain
+float ki = 1;  // Integral gain
+float kd = 0.02;  // Derivative gain
 float target_flow_rate = 90;  // Target flow rate in CFM
 float sample_time = 0.1;  // Sample time in seconds
 
