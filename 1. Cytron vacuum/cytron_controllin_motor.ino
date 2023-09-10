@@ -1,55 +1,65 @@
+// Constants for pin assignments
 const int motorPWM = 9;       // PWM pin for motor speed control
 const int motorDirection = 8; // Digital pin for motor direction control
 
-int currentSpeed = 0;
-int targetSpeed = 0;
+// Variables for motor control and filter parameters
+double currentSpeed = 0;          // Current motor speed
+double targetSpeed = 0;           // Target motor speed
+const double alpha = 0.04;        // Smoothing factor for filtering
+const int millisDelay = 20;       // Delay interval in milliseconds for applying the filter
+unsigned long previousMillis = 0; // Stores the last time startFilter was called
 
 void setup()
 {
-  pinMode(motorPWM, OUTPUT);       // Set motorPWM as output
-  pinMode(motorDirection, OUTPUT); // Set motorDirection as output
+  pinMode(motorPWM, OUTPUT);       // Set motorPWM as an output
+  pinMode(motorDirection, OUTPUT); // Set motorDirection as an output
 
   Serial.begin(9600); // Initialize serial communication
 }
 
 void loop()
 {
+  // Checking if there is available input from the serial
   if (Serial.available() > 0)
   {
-    currentSpeed = targetSpeed;
-    targetSpeed = Serial.parseInt();
-    controlMotor();
+    currentSpeed = targetSpeed;      // Update the current speed with the previous target speed
+    targetSpeed = Serial.parseInt(); // Read the new target speed from serial input
   }
-}
 
-void controlMotor()
-{
-  if (targetSpeed < 0)
+  unsigned long currentMillis = millis();
+  // Call startFilter to filter the speed and motor control every 20 milliseconds (50 Hz)
+  if (currentMillis - previousMillis >= millisDelay)
   {
-    digitalWrite(motorDirection, LOW);
-    targetSpeed = -targetSpeed;
-    startFilter();
-  }
-  else
-  {
-    digitalWrite(motorDirection, HIGH);
-    startFilter();
+    previousMillis = currentMillis;
+    startFilter(); // Apply the filter and control the motor
   }
 }
 
 void startFilter()
 {
-  double currentValue = currentSpeed;
-  double targetValue = targetSpeed;
-  double alpha = 0.04;
-
-  while (currentValue < targetValue - 0.1) // Remove this
-  {
-    currentValue = (1.0 - alpha) * (double)currentValue + alpha * (double)targetValue;
-    analogWrite(motorPWM, currentValue);
-    Serial.println(currentValue);
-    delay(20); // Remove this
-  }
-  currentSpeed = targetValue;
+  // Exponential smoothing filter to make motor speed changes gradual
+  currentSpeed = (1.0 - alpha) * currentSpeed + alpha * targetSpeed;
+  controlMotor(); // Control the motor based on the filtered speed
 }
-// implement delay to start filter func instead of delay(20)
+
+void controlMotor()
+{
+  if (currentSpeed < 0.0)
+  {
+    // Motor rotates in the clockwise direction (negative speed)
+    digitalWrite(motorDirection, LOW);
+    analogWrite(motorPWM, -currentSpeed); // Set motor speed
+    Serial.print(-currentSpeed);          // Print the motor speed
+    Serial.print(" clockwise");
+    Serial.println();
+  }
+  else if (currentSpeed > 0.0)
+  {
+    // Motor rotates in the anticlockwise direction (positive speed)
+    digitalWrite(motorDirection, HIGH);
+    analogWrite(motorPWM, currentSpeed); // Set motor speed
+    Serial.print(currentSpeed);          // Print the motor speed
+    Serial.print(" anticlockwise");
+    Serial.println();
+  }
+}
