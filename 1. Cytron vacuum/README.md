@@ -66,7 +66,7 @@ DC brushed motors can be suitable for some vacuum applications, but their suitab
 
 4. `Easy to control:` DC brushed motors are easy to control in terms of speed and direction, which can be important in vacuum applications.
 
-`However, there are also some limitations and considerations to keep in mind:`
+**However, there are also some limitations and considerations to keep in mind:**
 
 1. `Brush wear`: DC brushed motors have brushes that make physical contact with the commutator, and over time, these brushes can wear out. In a vacuum environment, dust and debris can accelerate brush wear, potentially leading to maintenance issues.
 
