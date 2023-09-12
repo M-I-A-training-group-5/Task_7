@@ -1,5 +1,11 @@
 import time
 
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
+
+# Plotting code
+# ...
+
 class PIDController:
     def __init__(self, Kp, Ki, Kd, sample_time):
         self.Kp = Kp
@@ -42,7 +48,8 @@ if __name__ == "__main__":
     sample_time = 0.1
     tolerance = 0.01
     pid_controller = PIDController(Kp, Ki, Kd, sample_time)
-
+    X_position_axis=[]
+    Y_position_axis=[]
     # Set desired position
     X_setpoint, Y_setpoint = [float(x) for x in input("Enter position (x,y): ").split()]
 
@@ -56,7 +63,7 @@ if __name__ == "__main__":
     while True:
         current_time = time.time()
         delta_time = (current_time - previous_time)
-
+    
         if delta_time >= sample_time:
             # Get control outputs
             PID_outputX, PID_outputY = pid_controller.update(X_setpoint, Y_setpoint, X_feedback, Y_feedback)
@@ -72,6 +79,8 @@ if __name__ == "__main__":
             # Update last feedback values
             X_last_feedback = X_feedback
             Y_last_feedback = Y_feedback
+            X_position_axis.append(X_feedback)
+            Y_position_axis.append(Y_feedback)
 
             # Print the current position
             print(f"X: {X_feedback}, Y: {Y_feedback}")
@@ -82,3 +91,22 @@ if __name__ == "__main__":
             # Check if the setpoints are reached within the tolerance
             if abs(X_setpoint - X_feedback) <= tolerance and abs(Y_setpoint - Y_feedback) <= tolerance:  # Corrected Y tolerance condition
                 break
+
+            # Plotting x and y analysis
+    plt.figure(figsize=(8, 6))
+    plt.plot(X_position_axis, Y_position_axis, 'b-', label='y = f(x)') 
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.title('Analysis of x and y')
+    plt.legend()
+
+    # # Plotting vx and vy analysis
+    # plt.figure(figsize=(8, 6))
+    # plt.plot(vx, vy, 'r-', label='vy = f(vx)') 
+    # plt.xlabel('vx')
+    # plt.ylabel('vy')
+    # plt.title('Analysis of vx and vy')
+    # plt.legend()
+
+    # Display the plots
+    plt.show()
