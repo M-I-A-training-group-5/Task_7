@@ -6,6 +6,8 @@ int position=0;
 const int motorPWM = 9;       // PWM pin for motor speed control
 const int motorDirection = 8; // Digital pin for motor direction control
 
+int speed=255;
+
 long previous_time=0;
 float previous_error=0,eintegral=0;
 void setup() {
@@ -32,7 +34,8 @@ void loop() {
     
     float deltaT=(float(current_time-previous_time))/1000.0;
     previous_time=current_time;
-
+      
+    
     int error=target-position;
 
     float dervT=(error-previous_error)/deltaT;
@@ -41,8 +44,9 @@ void loop() {
 
     float control_signal=Kp*error+Kd*dervT+Ki*eintegral;
 
+    speed=control_signal/deltaT;
     //motor power
-    controlMotor(control_signal);
+    controlMotor(speed);
 
     previous_error=error;
 
