@@ -1,15 +1,78 @@
-# Why we Selected A DC Brushed Motor
+# Cytron Motor Controller using Exponential smoothing Filter
 
-The decision to use a DC brushed motor for the Autonomous Planet Cleaner (APC) machine was based on the following reasons:
+## Introduction
 
-1. **Suitability for Vacuuming:** DC brushed motors are known for having reliable and effective performance in vacuuming applications, making them well-suited for waste collection and debris removal tasks.
+This documentation provides an overview of the code used to control a motor using a Cytron motor driver, including the implementation of an Exponential Smoothing Filter for precise motor speed control
 
-2. ** Constant Pulse: ** DC motors are well known for providing a constant output making sure that the vacuum is consistently working with a constant output.
+# Brief about cytron
 
-3. ** High Speeds: ** DC motors are also known for having a very high speed and are often used in propellers and other tasks that require high torque.  
+It’s a motor driver which mainly contains of 2 pins, one of which is a digital pin which controls motor’s direction **(CW or CCW)** and the other is a PWP pin which controls motor’s speed.
 
-4. **Availability:** DC brushed motors are widely available in the market, and there is abundant knowledge and expertise in working with them, facilitating procurement, troubleshooting, and maintenance.
+## Code Overview
 
-5. **Cost effective** DC brushed motors have a lower initial cost compared to brushless motors, making them a more budget-friendly option for the APC machine.
+### Pin Configuration
 
-These reasons led to the selection of a DC brushed motor, providing a cost-effective, simple, and suitable solution for efficient cleaning operations.
+- `motorPWM`: PWM pin (Pin 9) for motor speed control.
+- `motorDirection`: Digital pin (Pin 8) for motor direction control.
+
+### Global Variables
+
+- `currentSpeed`: Current motor speed.
+- `targetSpeed`: Target motor speed.
+- `alpha`: Smoothing factor for filtering (used in exponential smoothing).
+- `millisDelay`: Delay interval in milliseconds for applying the filter.
+- `previousMillis`: Stores the last time the `startFilter` function was called.
+
+### `setup()` Function
+
+- Configures `motorPWM` and `motorDirection` pins as outputs.
+- Initializes serial communication with a baud rate of 9600.
+
+### `loop()` Function
+
+- Checks if input is available from the serial monitor.
+- If input is available, updates `targetSpeed` with the new value.
+- Calls the `startFilter` function at a regular interval to control the motor.
+
+### `startFilter()` Function
+
+- Applies an exponential smoothing filter to make motor speed changes gradual.
+- Updates `currentSpeed` based on the filter.
+- Calls the `controlMotor` function to control the motor based on the filtered speed.
+
+### `controlMotor()` Function
+
+- Controls the motor's speed and direction.
+- If `currentSpeed` is negative, the motor rotates clockwise.
+- If `currentSpeed` is positive or zero, the motor rotates anticlockwise.
+
+# Additional Simulation
+
+For a more in-depth understanding of how the exponential smoothing filter works, you can refer to this [Jupyter Notebook](calculating freq and alpha.ipynb). This notebook includes a simulation that demonstrates the filter's behavior and its application to achieve precise control of a variable over time.
+
+The Jupyter file contains Python code that simulates the behavior of the smoothing filter, allowing you to visualize how it affects a variable's response to changes in a target value. It provides a complementary perspective to the Arduino code presented above.
+
+# DC Brushed Motor suitability for this application
+
+DC brushed motors can be suitable for some vacuum applications, but their suitability depends on the specific requirements of the application and the environmental conditions in which they will be used.
+
+**Advantages of DC brushed motors for vacuum applications:**
+
+1. `Cost-effective:` DC brushed motors have a lower initial cost compared to brushless motors, making them a more budget-friendly option for the machine.
+   
+2. `Constant Pulse:` DC motors are well known for providing a constant output making sure that the vacuum is consistently working with a constant output.
+
+3. `Size:` DC brushed motors are generally compact, which can be advantageous in applications where space is limited.
+
+4. `Easy to control:` DC brushed motors are easy to control in terms of speed and direction, which can be important in vacuum applications.
+
+**However, there are also some limitations and considerations to keep in mind:**
+
+1. `Brush wear`: DC brushed motors have brushes that make physical contact with the commutator, and over time, these brushes can wear out. In a vacuum environment, dust and debris can accelerate brush wear, potentially leading to maintenance issues.
+
+2. `Efficiency:` DC brushed motors may not be as energy-efficient as some other motor types, which can be a concern in applications where power consumption is a critical factor.
+   
+3. `Heat generation:` DC brushed motors can generate heat during operation. In vacuum applications the heat generated by the motor may need to be managed to prevent overheating of sensitive components or materials.
+## Conclusion
+
+The provided Arduino code allows you to control the speed and direction of a motor using the serial monitor. The use of an exponential smoothing filter helps make speed transitions smooth and gradual, which can be beneficial in various applications.
