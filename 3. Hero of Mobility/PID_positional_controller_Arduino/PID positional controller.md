@@ -8,7 +8,7 @@ As it’s known that our system elements are: Plant, controller, sensor, summing
 
 So in our simulation we enter the targeted position and we take the feedback from the encoder which plays the role of sensor and provides me with the measured position, the plant in our system here is also represented by the motor and its driver and we compute the error:
 
-$**[e(t)=targeted position-measured position]**$
+$*[e(t)=targeted position-measured position]*$
 
 ![Screenshot 2023-09-12 131431.jpg](PID%20positional%20controller%202984ae17945242abaf7c5609a689ca09/Screenshot_2023-09-12_131431.jpg)
 
