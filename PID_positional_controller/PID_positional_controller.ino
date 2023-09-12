@@ -2,28 +2,12 @@
 #define pinEncoderB 3
 
 int position=0;
-int angle=0;
 
 const int motorPWM = 9;       // PWM pin for motor speed control
 const int motorDirection = 8; // Digital pin for motor direction control
 
 long previous_time=0;
 float previous_error=0,eintegral=0;
-
-void controlMotor(int speed) {
-  if (speed < 0) {
-    //motor Rotates in clockwise direction
-    digitalWrite(motorDirection, LOW);
-    //assign speed to the motor (must be +ve)
-    analogWrite(motorPWM, -1 * speed);
-  } else {
-    //motor Rotates in anticlockwise direction
-    digitalWrite(motorDirection, HIGH);
-    //assign speed to the motor
-    analogWrite(motorPWM, speed);
-  }
-}
-
 void setup() {
   pinMode(pinEncoderA, INPUT_PULLUP);
   pinMode(pinEncoderB, INPUT_PULLUP);
@@ -38,7 +22,7 @@ void setup() {
 
 void loop() {
     //set target position
-      int target=1200;
+    int target=1200;
     if(Serial.available()>0){
         target=Serial.parseInt();
     }
