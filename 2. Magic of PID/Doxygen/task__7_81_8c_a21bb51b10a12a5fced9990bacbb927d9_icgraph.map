@@ -1,0 +1,7 @@
+<map id="controlMotor" name="controlMotor">
+<area shape="rect" id="Node000001" title="Control the motor direction and speed using PWM and print the motor status to serial monitor." alt="" coords="223,5,316,32"/>
+<area shape="rect" id="Node000002" href="$task__7_81_8c.html#afe1dd522d1eb71be4882d0988fdc5d1f" title="Exponential smoothing filter to make motor speed changes gradual and control the motor based on the f..." alt="" coords="99,5,175,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="208,21,175,21,175,16,208,16"/>
+<area shape="rect" id="Node000003" href="$task__7_81_8c.html#afe461d27b9c48d5921c00d521181f12f" title="Read the target speed from serial input and call startFilter periodically." alt="" coords="5,5,51,32"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="84,21,51,21,51,16,84,16"/>
+</map>

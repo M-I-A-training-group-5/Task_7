@@ -1,0 +1,5 @@
+<map id="startFilter" name="startFilter">
+<area shape="rect" id="Node000001" title="Exponential smoothing filter to make motor speed changes gradual and control the motor based on the f..." alt="" coords="5,5,82,32"/>
+<area shape="rect" id="Node000002" href="$task__7_81_8c.html#a21bb51b10a12a5fced9990bacbb927d9" title="Control the motor direction and speed using PWM and print the motor status to serial monitor." alt="" coords="130,5,223,32"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="82,16,115,16,115,21,82,21"/>
+</map>
