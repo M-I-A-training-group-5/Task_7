@@ -11,7 +11,7 @@ This project delves into the world of motor control and PID (Proportional-Integr
   - [`PID_controller.py`](#pid_controllerpy)
     - [PIDController class](#pidcontroller-class)
     - [PositionController class](#positioncontroller-class)
-  - [`main.py`](#mainpy)
+  - [`PID_animation.py`](#pid_animationpy)
     - [animate\_position\_and\_speed function](#animate_position_and_speed-function)
   - [Usage](#usage)
 - [Conclusion](#conclusion)
@@ -99,7 +99,7 @@ This file contains the PID controller logic and the PositionController class.
 
 - `control(self, X_setpoint, Y_setpoint)`: Performs position control using the PID controller and returns X and Y position and velocity trajectories.
 
-## `main.py`
+## `PID_animation.py`
 
 This file handles the visualization of the position and velocity trajectories using Matplotlib.
 
@@ -109,9 +109,9 @@ This file handles the visualization of the position and velocity trajectories us
 
 ## Usage
 
-1. Set the PID controller constants (Kp, Ki, Kd) and the sample time in `main.py`.
+1. Set the PID controller constants (Kp, Ki, Kd) and the sample time in `PID_animation.py`.
 
-2. Run `animation.py`.
+2. Run `PID_animation.py`.
 
 3. Enter the desired position (x, y) when prompted.
 
