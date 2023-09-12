@@ -8,9 +8,9 @@ As it’s known that our system elements are: Plant, controller, sensor, summing
 
 So in our simulation we enter the targeted position and we take the feedback from the encoder which plays the role of sensor and provides me with the measured position, the plant in our system here is also represented by the motor and its driver and we compute the error:
 
-$*[e(t)=targeted position-measured position]*$
+[e(t)  =  targeted position − measured position]
 
-![Screenshot 2023-09-12 131431.jpg](PID%20positional%20controller%202984ae17945242abaf7c5609a689ca09/Screenshot_2023-09-12_131431.jpg)
+![Screenshot 2023-09-12 131431](https://github.com/M-I-A-training-group-5/Task_7/assets/124249146/5ee91949-813f-43d8-833a-8a8055af17a4)
 
 # PID controller
 
@@ -20,7 +20,7 @@ Our controller algorithm contains of 3 controllers which are p-controller, I-con
 
 If we increase the KP we could reach the desired output more faster but we are vulnerable to overshooting.
 
-![Screenshot 2023-09-12 132019.jpg](PID%20positional%20controller%202984ae17945242abaf7c5609a689ca09/Screenshot_2023-09-12_132019.jpg)
+![Screenshot 2023-09-12 132019](https://github.com/M-I-A-training-group-5/Task_7/assets/124249146/e7996426-6081-4d86-9f5e-0ece72283915)
 
 # Code description
 
@@ -50,10 +50,10 @@ Then we compute the integration and derivative with estimate approximations:
 
 $\frac{\partial e(t)}{\partial t}=\frac{(error-prev error)}{\Delta t}$
 
-$∫e(t) dt$=$∫e(t) dt$+$error * \Delta t$
+![Screenshot 2023-09-12 232418](https://github.com/M-I-A-training-group-5/Task_7/assets/124249146/cb63b901-ae3b-41bf-a2c7-d9fd9d60d9f0)
 
 Here we are ready to compute the function of the control signal:
 
-$u(t)=Kp*error+Kd*\frac{\partial e(t)}{\partial t}+Ki*∫e(t) dt$
+![image](https://github.com/M-I-A-training-group-5/Task_7/assets/124249146/3c6904a5-3d59-4be6-aa23-4d020a5c2186)
 
 this attenuating signal is then sent to function control motor to drive the motor until we reach out targeted position.
