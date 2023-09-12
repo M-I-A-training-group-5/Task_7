@@ -38,8 +38,11 @@ void setup() {
 
 void loop() {
     //set target position
-    int target=1200;
-    float Kp=1,Kd=0,Ki=0;
+      int target=1200;
+    if(Serial.available()>0){
+        target=Serial.parseInt();
+    }
+    float Kp=1,Kd=0.25,Ki=0;
 
     long current_time=millis();
     
