@@ -73,8 +73,8 @@ class PositionController:
                 Vy_position_axis.append(Vy)
 
                 # Print the current position and velocity
-                print(f"X: {X_feedback}, Y: {Y_feedback}")
-                print(f"Vx: {Vx}, Vy: {Vy}")
+                print(f"X: {X_feedback:.2f}, Y: {Y_feedback:.2f}")
+                print(f"Vx: {Vx:.2f}, Vy: {Vy:.2f}")
 
                 previous_time = current_time
 

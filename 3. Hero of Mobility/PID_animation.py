@@ -44,7 +44,14 @@ if __name__ == "__main__":
     pid_controller = PIDController(Kp, Ki, Kd, sample_time)
 
     # Set desired position
-    X_setpoint, Y_setpoint = [float(x) for x in input("Enter position (x,y): ").split()]
+    while True:
+        try:
+            input_str = input("Enter position (x y): ")
+            X_setpoint, Y_setpoint = [float(x) for x in input_str.split()]
+            break  # Break out of the loop if conversion is successful
+        except ValueError:
+            print("Invalid input. Please enter valid floating-point values for x and y separated with space.")
+
 
     position_controller = PositionController(pid_controller)
     X_position_axis, Y_position_axis, Vx_position_axis, Vy_position_axis = position_controller.control(X_setpoint, Y_setpoint)
